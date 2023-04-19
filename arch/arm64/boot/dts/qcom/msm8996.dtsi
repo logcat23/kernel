@@ -71,6 +71,7 @@
 			compatible = "arm,armv8";
 			reg = <0x0 0x0>;
 			qcom,limits-info = <&mitigation_profile0>;
+			sched-energy-costs = <&CPU_COST_0 &CLUSTER_COST_0>;
 			enable-method = "psci";
 			efficiency = <1024>;
 			qcom,ea = <&ea0>;
@@ -95,6 +96,7 @@
 			compatible = "arm,armv8";
 			reg = <0x0 0x1>;
 			qcom,limits-info = <&mitigation_profile1>;
+			sched-energy-costs = <&CPU_COST_0 &CLUSTER_COST_0>;
 			enable-method = "psci";
 			efficiency = <1024>;
 			qcom,ea = <&ea1>;
@@ -114,6 +116,7 @@
 			compatible = "arm,armv8";
 			reg = <0x0 0x100>;
 			qcom,limits-info = <&mitigation_profile2>;
+			sched-energy-costs = <&CPU_COST_1 &CLUSTER_COST_1>;
 			enable-method = "psci";
 			efficiency = <1536>;
 			qcom,ea = <&ea2>;
@@ -139,6 +142,7 @@
 			reg = <0x0 0x101>;
 			enable-method = "psci";
 			qcom,limits-info = <&mitigation_profile3>;
+			sched-energy-costs = <&CPU_COST_1 &CLUSTER_COST_1>;
 			efficiency = <1536>;
 			qcom,ea = <&ea3>;
 			next-level-cache = <&L2_1>;
@@ -151,6 +155,122 @@
 				qcom,dump-size = <0x2800>;
 			};
 		};
+		
+		energy_costs: energy-costs {
+		compatible = "sched-energy";
+
+		CPU_COST_0: core-cost0 {
+			busy-cost-data = <
+				 307200   31
+				 422400   38
+				 480000   42
+				 556800   46
+				 652800   51
+				 729600   58
+				 844800   64
+				 960000   70
+				1036800   76
+				1113600   83
+				1190400   90
+				1228800   97
+				1324800  105
+				1401600  114 /* speedbin 0,1 */
+				1478400  124 /* speedbin 2 */
+				1516800  136 /* speedbin 0,1 */
+				1593600  152 /* speedbin 2 */
+			>;
+			idle-cost-data = <
+				22 18 14 12
+			>;
+		};
+		CPU_COST_1: core-cost1 {
+			busy-cost-data = <
+				307200   258
+				403200   260
+				480000   261
+				556800   263
+				652800   267
+				729600   272
+				806400   280
+				883200   291
+				940800   305
+			       1036800   324
+			       1113600   348
+			       1190400   378
+			       1248000   415
+			       1324800   460
+			       1401600   513
+			       1478400   576
+			       1555200   649
+			       1632000   732
+			       1708800   824
+			       1785600   923
+			       1824000  1027
+			       1920000  1131 /* speedbin 1,2 */
+			       1996800  1228 /* speedbin 1 */
+			       2073600  1290 /* speedbin 2 */
+			       2150400  1308 /* speedbin 2 */
+			>;
+			idle-cost-data = <
+				100 80 60 40
+			>;
+		};
+		CLUSTER_COST_0: cluster-cost0 {
+			busy-cost-data = <
+				 307200   3
+				 422400   4
+				 480000   4
+				 556800   4
+				 652800   5
+				 729600   5
+				 844800   6
+				 960000   7
+				1036800   7
+				1113600   8
+				1190400   9
+				1228800   9
+				1324800  10 /* speedbin 0,1 */
+				1401600  11 /* speedbin 2 */
+				1478400  12 /* speedbin 0,1 */
+				1593600  14 /* speedbin 2 */
+			>;
+			idle-cost-data = <
+				4 3 2 1
+			>;
+		};
+		CLUSTER_COST_1: cluster-cost1 {
+			busy-cost-data = <
+				307200  24
+				403200  24
+				480000  25
+				556800  25
+				652800  26
+				729600  27
+				806400  28
+				883200  29
+				940800  30
+			       1036800  32
+			       1113600  34
+			       1190400  37
+			       1248000  40
+			       1324800  45
+			       1401600  50
+			       1478400  57
+			       1555200  64
+			       1632000  74
+			       1708800  84
+			       1785600  96
+			       1824000 106
+			       1920000 113 /* speedbin 1,2 */
+			       1996800 120 /* speedbin 1 */
+			       2073600 125 /* speedbin 2 */
+			       2150400 127 /* speedbin 2 */
+			>;
+			idle-cost-data = <
+				4 3 2 1
+			>;
+		};
+	}; /* energy-costs */
 
 		cpu-map {
 			cluster0 {
