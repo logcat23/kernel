@@ -19,6 +19,7 @@
 #include "sched.h"
 #include "tune.h"
 
+#define LATENCY_MULTIPLIER	(1000)
 #define SUGOV_KTHREAD_PRIORITY	50
 
 struct sugov_tunables {
@@ -903,8 +904,8 @@ static int sugov_init(struct cpufreq_policy *policy)
 	 */
 	tunables->hispeed_load = DEFAULT_HISPEED_LOAD;
 	tunables->hispeed_freq = 0;
-	tunables->up_rate_limit_us = cpufreq_policy_transition_delay_us(policy);
-	tunables->down_rate_limit_us = cpufreq_policy_transition_delay_us(policy);
+	tunables->up_rate_limit_us = LATENCY_MULTIPLIER / 2;
+	tunables->down_rate_limit_us = LATENCY_MULTIPLIER * 20;
 	tunables->iowait_boost_enable = true;
 	
 	policy->governor_data = sg_policy;
